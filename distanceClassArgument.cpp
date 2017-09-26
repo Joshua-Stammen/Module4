@@ -14,11 +14,18 @@ private:
     int feet; //class data
     float inches;
 public:
-    int cm;
-    void setDist(int f, float i) //Member function to set data
+    //Constructor with no arguments
+    Distance(): feet(0), inches(0) //Constructor with no arguments
+    {/* empty body */}
+    //Constructor with two arguments
+    Distance (int ft,float in): feet(ft), inches(in)
+    {/* empty body */}
+
+
+    void setDist(int ft, float in) //Member function to set data
     {
-        feet = f;
-        inches = i;
+        feet = ft;
+        inches = in;
     }
 
     void getDist() // get user input)
@@ -34,7 +41,7 @@ public:
     {
         cout << "Feet " << feet << " and inches " <<inches<< endl;
     }
-    void add_Dist(Distance,Distance);
+    void add_Dist(Distance d1,Distance d2);
 };
 
 
@@ -47,31 +54,38 @@ int main(void)
 {
 
     //Create an instance "instantiate"
-    Distance d1, d2;
-
-    //Use methods to set/access data
-    d1.setDist(6,6.5);
-    cout << "\nDis 1" << endl;
+    Distance d1, d4;
+    cout << "\nd1 = ";
     d1.showDist();
 
-    d2.getDist();
-    cout << "\nDis 2" << endl;
+    Distance d2(8,2);
+    Distance d3(2,4);
+    cout << "\nd2 = ";
     d2.showDist();
-
-    //Update Info
-    d2.getDist();
-    cout << "\nDist 2" << endl;
-    d2.showDist();
-
-    //Access a public data member
-    d2.cm = 8.2;
-    cout << "cm is " << d2.cm << endl;
-
-
-
-
+    cout << "\nd3 = ";
+    d3.showDist();
+    d4.add_Dist(d2,d3);
+    cout << "\nd4 = ";
+    d4.showDist();
 
     return 0;
 
 }
 // Function Definitions
+//Belongs to the class. A method for members only
+// Template : CLASSNAME:: Function_name()
+// 1) Declare prototype inside class
+// 2) Definition is outside class
+// 3) Use the scope resolution operator ::
+
+void Distance:: add_Dist(Distance d1, Distance d2)
+{
+     inches = d2.inches + d1.inches;  // add the inches
+    feet = 0;
+    if(inches >= 12.0)
+    {
+        inches -= 12.0;
+        feet++;             //check for extra foot
+    }
+     feet += d2.feet + d1.feet; //add feet
+}
